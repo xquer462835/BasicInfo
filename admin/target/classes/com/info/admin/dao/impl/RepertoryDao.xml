@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 仓库 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.RepertoryDao">
+
+	<!-- 新增 仓库 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.Repertory"
+			useGeneratedKeys="true" keyProperty="repertoryId">
+		insert into repertory
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" repertoryId != null">
+				repertory_id,
+			</if>
+				create_time,
+			<if test=" createUser != null">
+				create_user,
+			</if>
+			<if test=" deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test=" updateTime != null">
+				update_time,
+			</if>
+			<if test=" seq != null">
+				seq,
+			</if>
+			<if test=" projectId != null">
+				project_id,
+			</if>
+			<if test=" materialName != null">
+				material_name,
+			</if>
+			<if test=" model != null">
+				model,
+			</if>
+			<if test=" unit != null">
+				unit,
+			</if>
+			<if test=" num != null">
+				num,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="repertoryId != null ">
+		        #{repertoryId},
+		    </if>
+				now(),
+			<if test="createUser != null ">
+		        #{createUser},
+		    </if>
+			<if test="deleteFlag != null ">
+		        #{deleteFlag},
+		    </if>
+			<if test="updateTime != null">
+				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="seq != null ">
+		        #{seq},
+		    </if>
+			<if test="projectId != null ">
+		        #{projectId},
+		    </if>
+			<if test="materialName != null ">
+		        #{materialName},
+		    </if>
+			<if test="model != null ">
+		        #{model},
+		    </if>
+			<if test="unit != null ">
+		        #{unit},
+		    </if>
+			<if test="num != null ">
+		        #{num},
+		    </if>
+
+        </trim>
+	</insert>
+
+	<!-- 更新 仓库 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.Repertory">
+		update repertory
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" createUser != null">
+					create_user = #{createUser},
+				</if>
+				<if test=" deleteFlag != null">
+					delete_flag = #{deleteFlag},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" seq != null">
+					seq = #{seq},
+				</if>
+				<if test=" projectId != null">
+					project_id = #{projectId},
+				</if>
+				<if test=" materialName != null">
+					material_name = #{materialName},
+				</if>
+				<if test=" model != null">
+					model = #{model},
+				</if>
+				<if test=" unit != null">
+					unit = #{unit},
+				</if>
+				<if test=" num != null">
+					num = #{num},
+				</if>
+
+            </trim>
+        </set>
+		where repertory_id = #{repertoryId}
+	</update>
+
+    <!-- 删除 仓库 对象 -->
+    <delete id="delete">
+        delete from repertory
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 仓库 对象 -->
+    <resultMap type="com.info.admin.entity.Repertory" id="repertoryMap">
+		<result column="repertory_id" property="repertoryId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+		<result column="project_id" property="projectId" />
+		<result column="projectName" property="projectName" />
+		<result column="material_name" property="materialName" />
+		<result column="model" property="model" />
+		<result column="unit" property="unit" />
+		<result column="num" property="num" />
+		<result column="columnName" property="columnName" />
+		<result column="columnComment" property="columnComment" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.repertoryId != null">
+			    and repertory_id =  #{entity.repertoryId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and  = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser} 
+		    </if>
+		    <if test=" entity.deleteFlag != null">
+			    and delete_flag =  #{entity.deleteFlag} 
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq} 
+		    </if>
+		    <if test=" entity.projectId != null and entity.projectId != ''">
+			    and project_id =  #{entity.projectId} 
+		    </if>
+		    <if test=" entity.materialName != null and entity.materialName != ''">
+			    and material_name =  #{entity.materialName} 
+		    </if>
+		    <if test=" entity.model != null and entity.model != ''">
+			    and model =  #{entity.model} 
+		    </if>
+		    <if test=" entity.unit != null">
+			    and unit =  #{entity.unit} 
+		    </if>
+		    <if test=" entity.num != null">
+			    and num =  #{entity.num} 
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 仓库 对象列表 -->
+    <select id="query"  resultMap="repertoryMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+          from repertory
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 仓库 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from repertory
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 仓库 对象列表  -->
+    <select id="pageQuery" resultMap="repertoryMap">
+        select
+         *
+		,(SELECT project_survey.lc_name FROM project_survey WHERE project_survey.project_id = repertory.project_id) as projectName
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+         from repertory
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 仓库 -->
+	<select id="getRepertoryById" parameterType="String" resultMap="repertoryMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+		 from repertory where repertory_id= #{repertoryId}
+	</select>
+
+
+	<!--  查询 材料信息 -->
+	<select id="queryRepertoryRepertoryTree"  resultMap="repertoryMap" >
+		SELECT
+		COLUMN_NAME as columnName,
+		column_comment as columnComment
+		FROM
+		INFORMATION_SCHEMA.COLUMNS
+		WHERE
+		table_name = 'repertory'
+		GROUP BY COLUMN_NAME
+	</select>
+
+	<!-- 查询 仓库 总记录数 -->
+	<select id="getRepertoryPage" resultMap="repertoryMap">
+		select
+		*
+		from repertory
+         WHERE material_name = #{materialName}
+         and project_id = #{projectId}
+	</select>
+	<!-- 入库  -->
+	<update id="updateNum"  >
+		update repertory set num= num + #{num} where repertory_id= #{repertoryId}
+	</update>
+
+
+	<!--根据库存编号批量出库存数据-->
+	<update id="outTestMaterial" parameterType="java.util.List">
+		<foreach collection="materialDetailList" item="item" index="index" separator=";">
+			update repertory
+			<set>
+				<trim suffixOverrides=",">
+					<if test=" item.num != null and item.num != 0">
+						num = num - (${item.num}),
+					</if>
+				</trim>
+			</set>
+			where repertory.repertory_id = #{item.repertoryId}
+		</foreach>
+
+	</update>
+</mapper>	
